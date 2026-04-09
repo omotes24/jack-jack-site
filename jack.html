@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>慶應義塾大学 ジャパンアニメカルチャー研究会</title>
+<style>
+  @font-face {
+    font-family: 'HelveticaNeue';
+    src: local('Helvetica Neue Bold'), local('HelveticaNeue-Bold'), local('Arial Bold');
+    font-weight: 700;
+  }
+ 
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f0;
+    --cream: #edeae4;
+    --red: #e8342e;
+    --red-glow: rgba(232,52,46,0.15);
+    --gray: #888;
+    --line-green: #06C755;
+  }
+ 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+ 
+  body {
+    font-family: 'HelveticaNeue', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 700;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+ 
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 3rem;
+    mix-blend-mode: difference;
+  }
+  nav .logo { color: #fff; font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; }
+  nav .nav-links { display: flex; gap: 2rem; list-style: none; }
+  nav .nav-links a {
+    color: #fff; text-decoration: none; font-size: 0.7rem;
+    letter-spacing: 0.2em; text-transform: uppercase; transition: opacity 0.3s;
+  }
+  nav .nav-links a:hover { opacity: 0.5; }
+ 
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh; background: var(--black); color: var(--white);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 3rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: gridPulse 8s ease-in-out infinite;
+  }
+  @keyframes gridPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+ 
+  .hero::after {
+    content: ''; position: absolute;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+    top: -10%; right: -10%; pointer-events: none;
+    animation: orbFloat 12s ease-in-out infinite alternate;
+  }
+  @keyframes orbFloat { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(-60px,80px) scale(1.2)} }
+ 
+  .hero-content { position: relative; z-index: 2; max-width: 1200px; }
+ 
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 2rem; animation: slideIn 1s ease both;
+  }
+  .hero-tag::before { content: ''; width: 40px; height: 2px; background: var(--red); }
+ 
+  .hero h1 {
+    font-size: clamp(3rem, 9vw, 8rem); line-height: 0.92;
+    letter-spacing: -0.03em; text-transform: uppercase;
+    animation: slideIn 1s 0.1s ease both;
+  }
+  .hero h1 .outline { -webkit-text-stroke: 1.5px var(--white); color: transparent; }
+  .hero h1 .red { color: var(--red); }
+ 
+  .hero-bottom {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-top: 3rem; animation: slideIn 1s 0.3s ease both;
+  }
+  .hero-sub {
+    font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gray);
+    text-transform: uppercase; max-width: 300px; line-height: 1.8;
+  }
+  .hero-cta { display: flex; gap: 0.8rem; }
+ 
+  @keyframes slideIn { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+ 
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 1rem 1.8rem; border-radius: 100px;
+    font-family: inherit; font-weight: 700; font-size: 0.75rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+  }
+  .btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+ 
+  .btn-line { background: var(--line-green); color: #fff; }
+  .btn-line:hover { transform: scale(1.05); box-shadow: 0 0 40px rgba(6,199,85,0.4); }
+  .btn-x { background: var(--white); color: var(--black); }
+  .btn-x:hover { transform: scale(1.05); box-shadow: 0 0 40px rgba(255,255,255,0.2); }
+  .btn-line-dark { background: var(--line-green); color: #fff; }
+  .btn-line-dark:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 30px rgba(6,199,85,0.35); }
+  .btn-x-dark { background: var(--black); color: var(--white); }
+  .btn-x-dark:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+ 
+  /* ─── MARQUEE ─── */
+  .marquee-wrap { overflow: hidden; background: var(--red); padding: 1rem 0; }
+  .marquee { display: flex; width: max-content; animation: scroll 20s linear infinite; }
+  .marquee span {
+    flex-shrink: 0; font-size: 0.75rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: #fff; padding: 0 3rem; white-space: nowrap;
+  }
+  @keyframes scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+ 
+  /* ─── ABOUT ─── */
+  .about {
+    max-width: 1000px; margin: 0 auto; padding: 8rem 3rem;
+    display: grid; grid-template-columns: 200px 1fr; gap: 4rem;
+  }
+  .about-label {
+    font-size: 0.65rem; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--gray); padding-top: 0.3rem;
+  }
+  .about-body h2 {
+    font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -0.02em;
+    line-height: 1.15; margin-bottom: 2.5rem; text-transform: uppercase;
+  }
+  .about-body h2 .red { color: var(--red); }
+ 
+  /* ──────────────────────────────────────
+     ↓↓↓  説明文をここで編集  ↓↓↓
+     ────────────────────────────────────── */
+  .about-text { font-size: 1rem; font-weight: 700; line-height: 2.2; color: #444; max-width: 600px; }
+  .about-text p + p { margin-top: 1.5em; }
+ 
+  /* ─── CARDS ─── */
+  .cards-section { background: var(--cream); padding: 6rem 3rem; }
+  .cards-header { max-width: 1000px; margin: 0 auto 3rem; }
+  .cards-header .section-tag {
+    font-size: 0.65rem; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 1rem;
+  }
+  .cards-header h2 { font-size: clamp(1.6rem, 3.5vw, 2.5rem); text-transform: uppercase; letter-spacing: -0.02em; }
+  .cards-grid {
+    max-width: 1000px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+  }
+  .card {
+    background: var(--white); border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 24px; padding: 2.5rem;
+    display: flex; flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s;
+    position: relative; overflow: hidden;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+  .card-number {
+    font-size: 5rem; line-height: 1; letter-spacing: -0.04em;
+    color: rgba(0,0,0,0.04); position: absolute; top: 1rem; right: 1.5rem;
+  }
+  .card-icon {
+    width: 56px; height: 56px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+  }
+  .card-icon svg { width: 28px; height: 28px; }
+  .card-icon.line { background: var(--line-green); color: #fff; }
+  .card-icon.x-icon { background: var(--black); color: var(--white); }
+  .card h3 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.8rem; }
+  .card p { font-size: 0.85rem; font-weight: 700; color: var(--gray); line-height: 1.8; margin-bottom: 2rem; flex-grow: 1; }
+  .card .btn { align-self: flex-start; padding: 0.85rem 1.6rem; border-radius: 14px; font-size: 0.7rem; }
+ 
+  /* ─── FOOTER ─── */
+  footer { background: var(--black); color: var(--gray); padding: 4rem 3rem; }
+  .footer-inner {
+    max-width: 1000px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-inner p { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a {
+    color: var(--gray); text-decoration: none; font-size: 0.65rem;
+    letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--white); }
+ 
+  /* ─── REVEAL ─── */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+ 
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    nav .nav-links { display: none; }
+    .hero { padding: 2rem 1.5rem; }
+    .hero h1 { font-size: clamp(2.5rem, 12vw, 5rem); }
+    .hero-bottom { flex-direction: column; align-items: flex-start; gap: 2rem; }
+    .hero-cta { flex-direction: column; width: 100%; }
+    .hero-cta .btn { width: 100%; justify-content: center; }
+    .about { grid-template-columns: 1fr; gap: 1.5rem; padding: 5rem 1.5rem; }
+    .cards-section { padding: 4rem 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .card { padding: 2rem; }
+    footer { padding: 3rem 1.5rem; }
+    .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+ 
+<nav>
+  <div class="logo">JACK</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#join">Join</a></li>
+  </ul>
+</nav>
+ 
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">慶應義塾大学 公認サークル</div>
+    <h1>
+      <span class="outline">Japan</span><br>
+      <span class="red">Anime</span><br>
+      Culture
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-sub">慶應義塾大学<br>ジャパンアニメカルチャー研究会</p>
+      <div class="hero-cta">
+        <!-- ↓ href にLINE OpenChatのURLを入れる ↓ -->
+        <a href="https://line.me/ti/g2/SlDmsfkaGeAqFneaECw583FW-SDzA__uh0UsqA" class="btn btn-line" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596a.629.629 0 01-.199.031c-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.271.173-.51.43-.595a.67.67 0 01.194-.033c.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          LINE OpenChat
+        </a>
+        <!-- ↓ href にXのURLを入れる ↓ -->
+        <a href="https://x.com/jack_keio_sfc" class="btn btn-x" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Follow on X
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>Anime ✦ Manga ✦ Culture ✦ Community ✦ Keio University ✦</span>
+    <span>Anime ✦ Manga ✦ Culture ✦ Community ✦ Keio University ✦</span>
+    <span>Anime ✦ Manga ✦ Culture ✦ Community ✦ Keio University ✦</span>
+    <span>Anime ✦ Manga ✦ Culture ✦ Community ✦ Keio University ✦</span>
+  </div>
+</div>
+ 
+<section class="about reveal" id="about">
+  <div class="about-label">About Us</div>
+  <div class="about-body">
+    <h2>Who<br>We <span class="red">Are</span></h2>
+    <!-- ╔══════════════════════════════════════════════╗
+         ║  ↓↓↓ 説明文をここで書き換えてください ↓↓↓    ║
+         ╚══════════════════════════════════════════════╝ -->
+    <div class="about-text">
+      <p>ジャパンアニメカルチャー研究会は、慶應義塾大学の学園祭内において、声優の方々、アニメ業界の方々をお招きしたイベントの開催を目的としている団体です。</p>
+      <p>・関智一様/安元洋貴様にお越しいただきました。(2021/2022)</p>
+        </p>・「小野坂昌也 ニューヤングTV」とのコラボイベントとして小野坂昌也様・小西克幸様にお越しいただき、SNSでも大きな反響をいただきました。(2023)</p>
+        </p>・置鮎龍太郎様・阪口大助様のお二人をお呼びし、多くのお客様方にご好評いただきました。(2024)</p>
+    </div>
+  </div>
+</section>
+ 
+<section class="cards-section" id="join">
+  <div class="cards-header reveal">
+    <p class="section-tag">Join Us</p>
+    <h2>参加する</h2>
+  </div>
+  <div class="cards-grid">
+    <div class="card reveal">
+      <span class="card-number">01</span>
+      <div class="card-icon line">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596a.629.629 0 01-.199.031c-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.271.173-.51.43-.595a.67.67 0 01.194-.033c.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+      </div>
+      <h3>LINE OpenChat</h3>
+      <p>JACK オープンチャットは<br>こちらから！</p>
+      <!-- ↓ href にLINE OpenChatのURLを入れる ↓ -->
+      <a href="https://line.me/ti/g2/SlDmsfkaGeAqFneaECw583FW-SDzA__uh0UsqA" class="btn btn-line-dark" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596a.629.629 0 01-.199.031c-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.271.173-.51.43-.595a.67.67 0 01.194-.033c.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+        参加する →
+      </a>
+    </div>
+    <div class="card reveal">
+      <span class="card-number">02</span>
+      <div class="card-icon x-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </div>
+      <h3>X（旧Twitter）</h3>
+      <p>最新の活動情報や<br>イベント告知をチェック！</p>
+      <!-- ↓ href にXのURLを入れる ↓ -->
+      <a href="https://x.com/jack_keio_sfc" class="btn btn-x-dark" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        フォローする →
+      </a>
+    </div>
+  </div>
+</section>
+ 
+<footer>
+  <div class="footer-inner">
+    <p>© 2026慶應義塾大学 ジャパンアニメカルチャー研究会</p>
+    <ul class="footer-links">
+      <li><a href="#https://line.me/ti/g2/SlDmsfkaGeAqFneaECw583FW-SDzA__uh0UsqA">LINE</a></li>
+      <li><a href="#https://x.com/jack_keio_sfc">X</a></li>
+    </ul>
+  </div>
+</footer>
+ 
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
