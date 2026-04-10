@@ -48,24 +48,45 @@
   }
   nav .nav-links a:hover { opacity: 0.5; }
  
-  /* ─── HERO ─── */
+  /* ─── HERO (スライドショー版) ─── */
   .hero {
-    min-height: 100vh; background: var(--black); color: var(--white);
+    min-height: 100vh;
+    background: #2a2a2a;
+    color: var(--white);
     display: flex; flex-direction: column; justify-content: flex-end;
     padding: 3rem; position: relative; overflow: hidden;
   }
-  .hero::before {
-    content: ''; position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size: 80px 80px;
-    animation: gridPulse 8s ease-in-out infinite;
+ 
+  .hero-slideshow {
+    position: absolute; inset: 0; z-index: 0;
   }
-  @keyframes gridPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero-slideshow .slide {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: slideFade 24s infinite;
+  }
+  .hero-slideshow .slide:nth-child(1) { background-image: url('Photo01.JPG'); animation-delay:  0s; }
+  .hero-slideshow .slide:nth-child(2) { background-image: url('Photo02.JPG'); animation-delay:  6s; }
+  .hero-slideshow .slide:nth-child(3) { background-image: url('Photo03.JPG'); animation-delay: 12s; }
+  .hero-slideshow .slide:nth-child(4) { background-image: url('Photo04.JPG'); animation-delay: 18s; }
+ 
+  @keyframes slideFade {
+    0%   { opacity: 0; transform: scale(1.08); }
+    4%   { opacity: 1; }
+    25%  { opacity: 1; transform: scale(1.0); }
+    29%  { opacity: 0; }
+    100% { opacity: 0; }
+  }
+ 
+  .hero::before {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(135deg, rgba(40,40,45,0.75) 0%, rgba(20,20,25,0.65) 100%);
+  }
  
   .hero::after {
-    content: ''; position: absolute;
+    content: ''; position: absolute; z-index: 1;
     width: 600px; height: 600px; border-radius: 50%;
     background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
     top: -10%; right: -10%; pointer-events: none;
@@ -86,6 +107,7 @@
     font-size: clamp(3rem, 9vw, 8rem); line-height: 0.92;
     letter-spacing: -0.03em; text-transform: uppercase;
     animation: slideIn 1s 0.1s ease both;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.4);
   }
   .hero h1 .outline { -webkit-text-stroke: 1.5px var(--white); color: transparent; }
   .hero h1 .red { color: var(--red); }
@@ -95,7 +117,7 @@
     margin-top: 3rem; animation: slideIn 1s 0.3s ease both;
   }
   .hero-sub {
-    font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gray);
+    font-size: 0.75rem; letter-spacing: 0.2em; color: #ccc;
     text-transform: uppercase; max-width: 300px; line-height: 1.8;
   }
   .hero-cta { display: flex; gap: 0.8rem; }
@@ -146,9 +168,6 @@
   }
   .about-body h2 .red { color: var(--red); }
  
-  /* ──────────────────────────────────────
-     ↓↓↓  説明文をここで編集  ↓↓↓
-     ────────────────────────────────────── */
   .about-text { font-size: 1rem; font-weight: 700; line-height: 2.2; color: #444; max-width: 600px; }
   .about-text p + p { margin-top: 1.5em; }
  
@@ -234,6 +253,12 @@
 </nav>
  
 <section class="hero">
+  <div class="hero-slideshow">
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+  </div>
   <div class="hero-content">
     <div class="hero-tag">慶應義塾大学 公認サークル</div>
     <h1>
@@ -244,12 +269,10 @@
     <div class="hero-bottom">
       <p class="hero-sub">慶應義塾大学<br>ジャパンアニメカルチャー研究会</p>
       <div class="hero-cta">
-        <!-- ↓ href にLINE OpenChatのURLを入れる ↓ -->
         <a href="https://line.me/ti/g2/SlDmsfkaGeAqFneaECw583FW-SDzA__uh0UsqA" class="btn btn-line" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596a.629.629 0 01-.199.031c-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.271.173-.51.43-.595a.67.67 0 01.194-.033c.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
           LINE OpenChat
         </a>
-        <!-- ↓ href にXのURLを入れる ↓ -->
         <a href="https://x.com/jack_keio_sfc" class="btn btn-x" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           Follow on X
@@ -272,14 +295,11 @@
   <div class="about-label">About Us</div>
   <div class="about-body">
     <h2>Who<br>We <span class="red">Are</span></h2>
-    <!-- ╔══════════════════════════════════════════════╗
-         ║  ↓↓↓ 説明文をここで書き換えてください ↓↓↓    ║
-         ╚══════════════════════════════════════════════╝ -->
     <div class="about-text">
       <p>ジャパンアニメカルチャー研究会は、慶應義塾大学の学園祭内において、声優の方々、アニメ業界の方々をお招きしたイベントの開催を目的としている団体です。</p>
       <p>・関智一様/安元洋貴様にお越しいただきました。(2021/2022)</p>
-        </p>・「小野坂昌也 ニューヤングTV」とのコラボイベントとして小野坂昌也様・小西克幸様にお越しいただき、SNSでも大きな反響をいただきました。(2023)</p>
-        </p>・置鮎龍太郎様・阪口大助様のお二人をお呼びし、多くのお客様方にご好評いただきました。(2024)</p>
+      <p>・「小野坂昌也 ニューヤングTV」とのコラボイベントとして小野坂昌也様・小西克幸様にお越しいただき、SNSでも大きな反響をいただきました。(2023)</p>
+      <p>・置鮎龍太郎様・阪口大助様のお二人をお呼びし、多くのお客様方にご好評いただきました。(2024)</p>
     </div>
   </div>
 </section>
@@ -287,7 +307,7 @@
 <section class="cards-section" id="join">
   <div class="cards-header reveal">
     <p class="section-tag">Join Us</p>
-    <h2>Welcome!!</h2>
+    <h2>Welcome!</h2>
   </div>
   <div class="cards-grid">
     <div class="card reveal">
@@ -297,7 +317,6 @@
       </div>
       <h3>LINE OpenChat</h3>
       <p>JACK オープンチャットは<br>こちらから！</p>
-      <!-- ↓ href にLINE OpenChatのURLを入れる ↓ -->
       <a href="https://line.me/ti/g2/SlDmsfkaGeAqFneaECw583FW-SDzA__uh0UsqA" class="btn btn-line-dark" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596a.629.629 0 01-.199.031c-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.271.173-.51.43-.595a.67.67 0 01.194-.033c.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
         参加する →
@@ -310,7 +329,6 @@
       </div>
       <h3>X（旧Twitter）</h3>
       <p>最新の活動情報や<br>イベント告知をチェック！</p>
-      <!-- ↓ href にXのURLを入れる ↓ -->
       <a href="https://x.com/jack_keio_sfc" class="btn btn-x-dark" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         フォローする →
@@ -321,10 +339,10 @@
  
 <footer>
   <div class="footer-inner">
-    <p>© 2026慶應義塾大学 ジャパンアニメカルチャー研究会</p>
+    <p>© 2026 慶應義塾大学 ジャパンアニメカルチャー研究会</p>
     <ul class="footer-links">
-      <li><a href="#https://line.me/ti/g2/SlDmsfkaGeAqFneaECw583FW-SDzA__uh0UsqA">LINE</a></li>
-      <li><a href="#https://x.com/jack_keio_sfc">X</a></li>
+      <li><a href="https://line.me/ti/g2/SlDmsfkaGeAqFneaECw583FW-SDzA__uh0UsqA" target="_blank" rel="noopener">LINE</a></li>
+      <li><a href="https://x.com/jack_keio_sfc" target="_blank" rel="noopener">X</a></li>
     </ul>
   </div>
 </footer>
